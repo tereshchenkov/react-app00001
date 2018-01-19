@@ -1,8 +1,16 @@
 import React, {Component} from 'react'
 import CommentList from './CommentList'
-import toggleOpen from '../decorators/toggleOpen';
+import toggleOpen from '../decorators/toggleOpen'
+import PropTypes from 'prop-types'
 
 class Article extends Component {
+    static propTypes = {
+        article: PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            title: PropTypes.string.isRequired,
+            text: PropTypes.string.isRequired
+        }).isRequired
+    }
     
     getBody() {
         if (!this.props.isOpen) return null
