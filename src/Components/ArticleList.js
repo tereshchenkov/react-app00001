@@ -1,23 +1,43 @@
-import React from 'react'
-import Article from './Article'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+import Article from './Article'
 
-export default function ArticleList({articles}) {
+export default class ArticleList extends Component {
 
-    const articleElement = articles.map(article => {
-        return <li key = {article.id}><Article article = {article} /></li>
-    })
+    static propTypes = {
+        articles: PropTypes.arrayOf(
+            PropTypes.object
+        ).isRequired
+    }
 
-    return (
-        <ul>
-            {articleElement}
-        </ul>
-    )
-}
+    state = {
+        openArticleId: null
+    }
 
+    toggleOpenArticle (openArticleId) {
+        
+        if (openArticleId === this.state.openArticleId) {
+           this.setState({openArticleId : null})
+        } else {
+            this.setState({openArticleId})
+        }
+    } 
 
-ArticleList.propTypes = {
-    articles: PropTypes.arrayOf(
-        PropTypes.object
-    ).isRequired
+    render() {
+        const articleElement = this.props.articles.map(article => {
+            return <li key = {article.id}>
+                        <Article 
+                            article = {article} 
+                            isOpen = {article.id === this.state.openArticleId}
+                            toggleOpen = {this.toggleOpenArticle.bind(this, article.id)}
+                        />
+                    </li>
+        })
+
+        return (
+            <ul>
+                {articleElement}
+            </ul>
+        )
+    }
 }
