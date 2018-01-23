@@ -4,8 +4,7 @@ import './style.css'
 
 class CommentForm extends Component {
     static propTypes = {
-        articleId: PropTypes.string.isRequired,
-        addComment: PropTypes.func.isRequired
+        
     };
 
     state = {

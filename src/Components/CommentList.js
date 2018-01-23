@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import Comment from './Comment'
 import toggleOpen from '../decorators/toggleOpen';
 import PropTypes from 'prop-types'
+import CommentForm from './CommentForm'
 
 class CommentList extends Component {
     static propTypes = {
@@ -20,7 +21,10 @@ class CommentList extends Component {
         if (!comments.length) return <section>No comments yet</section>
 
         const commentElement = comments.map(comment => <li key = {comment.id}><Comment comment = {comment} /></li>)
-        return <section><ul>{commentElement}</ul></section>
+        return <section>
+                <ul>{commentElement}</ul>
+                <CommentForm />               
+            </section>
     }
 
     render() {
