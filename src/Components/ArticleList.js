@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Article from './Article'
-import accordion from '../decorators/accordion';
+import accordion from '../decorators/accordion'
+import Filters from './Filters'
 
 class ArticleList extends Component {
 
@@ -25,9 +26,12 @@ class ArticleList extends Component {
         })
 
         return (
-            <ul>
-                {articleElement}
-            </ul>
+            <div>
+                <Filters articles = {this.props.articles} />
+                <ul>
+                    {articleElement}
+                </ul>
+            </div>
         )
     }
 }
