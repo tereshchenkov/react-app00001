@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import {articles} from '../fixtures'
 import ArticleList from './ArticleList'
 import Filters from './Filters'
 
@@ -11,8 +10,8 @@ class App extends Component {
     render() {
         return (
             <div>
-                <Filters articles = {articles} />
-                <ArticleList articles = {articles} />
+                <Filters/>
+                <ArticleList />
             </div>
         )
     }

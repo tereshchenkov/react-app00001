@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import CommentList from './CommentList'
 import toggleOpen from '../decorators/toggleOpen'
 import PropTypes from 'prop-types'
+import {connect} from 'react-redux'
+import {deleteArticle} from '../AC'
 
 class Article extends Component {
     static propTypes = {
@@ -10,6 +12,12 @@ class Article extends Component {
             title: PropTypes.string.isRequired,
             text: PropTypes.string.isRequired
         }).isRequired
+    }
+
+    handleDelete = () => {
+        const {deleteArticle, article} = this.props
+        deleteArticle(article.id)
+        console.log('delete', article.id);
     }
     
     getBody() {
@@ -31,10 +39,13 @@ class Article extends Component {
                 <button onClick = {toggleOpen}>
                     {isOpen ? 'close' : 'open'}
                 </button>
+                <button onClick = {this.handleDelete}>
+                    DELETE
+                </button>
                 {this.getBody()}
             </div>
         )
     }
 }
 
-export default Article
+export default connect(null,{deleteArticle})(Article)

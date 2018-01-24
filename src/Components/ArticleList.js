@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Article from './Article'
 import accordion from '../decorators/accordion'
 import Filters from './Filters'
+import {connect} from 'react-redux'
 
 class ArticleList extends Component {
 
@@ -14,8 +15,8 @@ class ArticleList extends Component {
 
 
     render() {
-        const {openId, toggleOpenAccordion} = this.props
-        const articleElement = this.props.articles.map(article => {
+        const {openId, toggleOpenAccordion, articles} = this.props
+        const articleElement = articles.map(article => {
             return <li key = {article.id}>
                         <Article 
                             article = {article} 
@@ -33,4 +34,6 @@ class ArticleList extends Component {
     }
 }
 
-export default accordion(ArticleList)
+export default connect(state => ({
+    articles: state.articles
+}))(accordion(ArticleList))

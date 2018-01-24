@@ -30,6 +30,7 @@ class SelectFilter extends Component {
     }
 }
 
-export default connect(state => ({
-    selected: state.filters.selected
-}), { changeSelection })(SelectFilter)
+export default connect(state => (({
+    selected: state.filters.selected,
+    articles: state.articles
+})), { changeSelection })(SelectFilter)
