@@ -11,7 +11,7 @@ class DateRange extends Component {
     }
 
     render() {
-        const {from, to} = this.props.range;
+        //const {from, to} = this.props.range;
         const selectedRange = from && to && `${from.toDateString()} - ${to.toDateString()}`
         return (
             <div className='date-range'>

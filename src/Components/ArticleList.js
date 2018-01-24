@@ -26,12 +26,9 @@ class ArticleList extends Component {
         })
 
         return (
-            <div>
-                <Filters articles = {this.props.articles} />
                 <ul>
                     {articleElement}
                 </ul>
-            </div>
         )
     }
 }
