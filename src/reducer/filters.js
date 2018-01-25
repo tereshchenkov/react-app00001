@@ -1,7 +1,11 @@
-import {CHANGE_SELECTION} from '../constants'
+import {CHANGE_SELECTION, CHANGE_DATE_RANGE} from '../constants'
 
 const dafaultFilters = {
-    selected: []
+    selected: [],
+    dateRange: {
+        from: null,
+        to: null
+    }
 }
 
 export default (filters = dafaultFilters, action) => {
@@ -10,7 +14,9 @@ export default (filters = dafaultFilters, action) => {
     switch (type) {
         case CHANGE_SELECTION:
             return {...filters, selected: payload.selected}
+    
+        case CHANGE_DATE_RANGE:
+            return {...filters, dateRange: payload.dateRange}
     }
-
     return filters
 }
