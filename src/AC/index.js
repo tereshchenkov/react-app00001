@@ -1,4 +1,4 @@
-import {CHANGE_SELECTION, DELETE_ARTICLE, CHANGE_DATE_RANGE} from '../constants'
+import {CHANGE_SELECTION, DELETE_ARTICLE, CHANGE_DATE_RANGE, ADD_COMMENT} from '../constants'
 
 export function changeSelection(selected) {
     return {
@@ -18,5 +18,13 @@ export function changeDateRange(dateRange) {
     return {
         type: CHANGE_DATE_RANGE,
         payload: {dateRange}
+    }
+}
+
+export function addComment(comment, articleId) {
+    return {
+        type: ADD_COMMENT,
+        payload: { comment, articleId },
+        generateId: true
     }
 }

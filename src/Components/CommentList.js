@@ -5,30 +5,25 @@ import PropTypes from 'prop-types'
 import CommentForm from './CommentForm'
 
 class CommentList extends Component {
-    static propTypes = {
-        comments: PropTypes.arrayOf(
-            PropTypes.object
-        ).isRequired
-    }
-
-    static defaultProps = {
-        comments : []
-    }
+  
 
     getBody() {
-        if (!this.props.isOpen) return null
-        const {comments} = this.props;
-        if (!comments.length) return <section>No comments yet</section>
-
-        const commentElement = comments.map(comment => <li key = {comment.id}><Comment comment = {comment} /></li>)
+        const {article : {comments, id}, isOpen} = this.props
+        if (!isOpen) return null
+        if (!comments) return <section>
+            No comments yet
+            <CommentForm articleId = {id}/>
+            </section>
+    
+        const commentElement = comments.map(id => <li key = {id}><Comment id = {id} /></li>)
         return <section>
                 <ul>{commentElement}</ul>
-                <CommentForm />               
+                <CommentForm articleId = {id}/>               
             </section>
     }
 
     render() {
-        const {comments, isOpen, toggleOpen} = this.props
+        const {article, isOpen, toggleOpen} = this.props
         return (
             <div>
                 <button onClick = {toggleOpen}>

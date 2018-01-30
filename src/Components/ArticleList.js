@@ -4,6 +4,7 @@ import Article from './Article'
 import accordion from '../decorators/accordion'
 import Filters from './Filters'
 import {connect} from 'react-redux'
+import {filtratedArticlesSelector} from '../selectors'
 
 class ArticleList extends Component {
 
@@ -19,7 +20,7 @@ class ArticleList extends Component {
         const articleElement = articles.map(article => {
             return <li key = {article.id}>
                         <Article 
-                            article = {article} 
+                            id = {article.id} 
                             isOpen = {article.id === openId}
                             toggleOpen = {toggleOpenAccordion.bind(null, article.id)}
                         />
@@ -34,17 +35,8 @@ class ArticleList extends Component {
     }
 }
 
-export default connect(({filters, articles}) => {
-    const {selected, dateRange: {from, to}} = filters
-
-    const filteredArticles = articles.filter( article => {
-        const published = Date.parse(article.date)
-        return (!selected.length || selected.includes(article.id)) 
-                &&
-                (!from || !to ||(published > from && published < to ))
-    })
-    
+export default connect((state) => {
     return {
-    articles: filteredArticles
+        articles: filtratedArticlesSelector(state)
     }
 })(accordion(ArticleList))

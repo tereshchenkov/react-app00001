@@ -26,7 +26,7 @@ class Article extends Component {
         return (
             <div>
               <section>{article.text}</section>
-              <CommentList comments = {article.comments} />
+              <CommentList article = {article} />
             </div>
         )
     }
@@ -48,4 +48,8 @@ class Article extends Component {
     }
 }
 
-export default connect(null,{deleteArticle})(Article)
+export default connect((state, ownProps) => {
+    return {
+        article: state.articles[ownProps.id]
+    }
+},{deleteArticle})(Article)

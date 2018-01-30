@@ -1,7 +1,11 @@
-import {createStore} from 'redux'
+import {createStore, applyMiddleware} from 'redux'
 import reducer from '../reducer'
+import logger from '../middlewares/logger'
+import generateId from '../middlewares/generateId'
 
-const store = createStore(reducer);
+const enhancer = applyMiddleware(generateId, logger)
+
+const store = createStore(reducer, {}, enhancer);
 
 
 //dev only 
