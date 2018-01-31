@@ -1,4 +1,5 @@
-import {CHANGE_SELECTION, DELETE_ARTICLE, CHANGE_DATE_RANGE, ADD_COMMENT} from '../constants'
+import {CHANGE_SELECTION, DELETE_ARTICLE,
+    CHANGE_DATE_RANGE, ADD_COMMENT, LOAD_ALL_ARTICLES} from '../constants'
 
 export function changeSelection(selected) {
     return {
@@ -26,5 +27,12 @@ export function addComment(comment, articleId) {
         type: ADD_COMMENT,
         payload: { comment, articleId },
         generateId: true
+    }
+}
+
+export function loadAllArticles() {
+    return {
+        type: LOAD_ALL_ARTICLES,
+        callAPI: '/api/article'
     }
 }
