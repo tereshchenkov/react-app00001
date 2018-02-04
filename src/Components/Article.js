@@ -3,15 +3,24 @@ import CommentList from './CommentList'
 import toggleOpen from '../decorators/toggleOpen'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {deleteArticle} from '../AC'
-
+import {deleteArticle, loadArticle} from '../AC'
+import Loader from './loader'
 class Article extends Component {
     static propTypes = {
+        id: PropTypes.string.isRequired,
+        isOpen: PropTypes.bool,
+        toggleOpen: PropTypes.func,
+        //from connect
         article: PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            title: PropTypes.string.isRequired,
-            text: PropTypes.string.isRequired
-        }).isRequired
+            id: PropTypes.string,
+            title: PropTypes.string,
+            text: PropTypes.string
+        })
+    }
+
+    componentDidMount() {
+        const {loadArticle, article, id} = this.props
+        if (!article || (!article.text && !article.loadind)) loadArticle(id)
     }
 
     handleDelete = () => {
@@ -21,8 +30,10 @@ class Article extends Component {
     }
     
     getBody() {
-        if (!this.props.isOpen) return null
-        const {article} = this.props;
+
+        const {article, isOpen} = this.props;
+        if (!isOpen) return null
+        if (article.loadind) return <Loader />
         return (
             <div>
               <section>{article.text}</section>
@@ -33,6 +44,7 @@ class Article extends Component {
 
     render() {
         const {article, isOpen, toggleOpen} = this.props
+        if (!article) return null
         return (
             <div>
                 <h3>{article.title}</h3>
@@ -49,7 +61,11 @@ class Article extends Component {
 }
 
 export default connect((state, ownProps) => {
-    return {
-        article: state.articles[ownProps.id]
-    }
-},{deleteArticle})(Article)
+        return {
+            article: state.articles.entities.get(ownProps.id)
+        }
+    },
+    {deleteArticle, loadArticle},
+    null,
+    { pure: true}
+)(Article)

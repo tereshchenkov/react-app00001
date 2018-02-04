@@ -6,6 +6,7 @@ import Filters from './Filters'
 import {connect} from 'react-redux'
 import {filtratedArticlesSelector} from '../selectors'
 import {loadAllArticles} from '../AC'
+import Loader from './loader'
 
 class ArticleList extends Component {
 
@@ -16,11 +17,12 @@ class ArticleList extends Component {
     }
 
     componentDidMount() {
-        const {loadAllArticles} = this.props;
-        loadAllArticles();
+        const {loaded, loading, loadAllArticles} = this.props;
+        if (!loaded && !loading) loadAllArticles();
     }
     render() {
-        const {openId, toggleOpenAccordion, articles} = this.props
+        const {openId, toggleOpenAccordion, articles, loading} = this.props
+        if (loading) return <Loader />
         const articleElement = articles.map(article => {
             return <li key = {article.id}>
                         <Article 
@@ -41,6 +43,8 @@ class ArticleList extends Component {
 
 export default connect((state) => {
     return {
-        articles: filtratedArticlesSelector(state)
+        articles: filtratedArticlesSelector(state),
+        loading: state.articles.loading,
+        loaded: state.articles.loaded
     }
 }, {loadAllArticles})(accordion(ArticleList))
